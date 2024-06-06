@@ -1,0 +1,14 @@
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\bin\Debug\net8.0\AeroSystem.exe
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\bin\Debug\net8.0\AeroSystem.deps.json
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\bin\Debug\net8.0\AeroSystem.runtimeconfig.json
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\bin\Debug\net8.0\AeroSystem.dll
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\bin\Debug\net8.0\AeroSystem.pdb
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.AssemblyInfoInputs.cache
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.AssemblyInfo.cs
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.csproj.CoreCompileInputs.cache
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.dll
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\refint\AeroSystem.dll
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.pdb
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.genruntimeconfig.cache
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\ref\AeroSystem.dll

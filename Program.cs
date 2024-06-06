@@ -5,9 +5,6 @@ using AeroSystem.models.Flight;
 using AeroSystem.models.Passenger;
 using AeroSystem.models.SelfServiceKiosk;
 
-Console.WriteLine("Hello, World!");
-
-
 SelfServiceKiosk kiosk = new SelfServiceKiosk(1, "K001");
 Passenger passenger = new Passenger(1, "John", "Doe", "123456", "Flight 123", false, "");
 List<Passenger> passengerList = new List<Passenger> { passenger };

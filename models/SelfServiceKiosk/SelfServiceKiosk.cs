@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AeroSystem.models.BoardingPass;
 
 namespace AeroSystem.models.SelfServiceKiosk
 {
@@ -30,14 +31,26 @@ namespace AeroSystem.models.SelfServiceKiosk
         }
 
         // ! Methods
-        public void selfCheckIn(Passenger.Passenger passenger)
+        public void selfCheckIn(Passenger.Passenger passenger, Flight.Flight flight)
         {
-            Console.WriteLine("Passenger " + passenger.Id + " has been checked in.");
+            Console.WriteLine("Passenger " + passenger.Id + " has checked in at kiosk " + kioskId + " for flight " + flight.FlightNumber);
+
+            // Create boarding pass
+            BoardingPass.BoardingPass boardingPass = new BoardingPass.BoardingPass(flight, "B2", DateTime.Now, DateTime.Now.AddHours(3), passenger);
         }
 
-        public void printBoardingPass(Passenger.Passenger passenger)
+        public void printBoardingPass(Passenger.Passenger passenger, Flight.Flight flight, BoardingPass.BoardingPass boardingPass)
         {
-            Console.WriteLine("Boarding pass for passenger " + passenger.Id + " has been printed.");
+            Console.WriteLine("Passenger " + passenger.Id + " has printed boarding pass " + boardingPass.BoardingPassId + " for flight " + flight.FlightNumber);
+
+            // Show boarding pass
+            Console.WriteLine("Boarding Pass ID: " + boardingPass.BoardingPassId);
+            Console.WriteLine("Flight Number: " + flight.FlightNumber);
+            Console.WriteLine("Seat Number: " + boardingPass.SeatNumber);
+            Console.WriteLine("Gate: " + boardingPass.Gate);
+            Console.WriteLine("Boarding Time: " + boardingPass.BoardingTime);
+            Console.WriteLine("Departure Time: " + boardingPass.DepartureTime);
+
         }
 
     }

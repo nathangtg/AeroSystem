@@ -12,3 +12,4 @@ C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\refint\Ae
 C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.pdb
 C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.genruntimeconfig.cache
 C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\ref\AeroSystem.dll
+C:\Users\Nathan G\Desktop\Further Learning\AeroSystem\obj\Debug\net8.0\AeroSystem.sourcelink.json

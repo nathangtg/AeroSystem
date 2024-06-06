@@ -7,6 +7,7 @@ namespace AeroSystem.models.Flight
 {
     public class Flight
     {
+        private static int nextId = 1; // Static field to track the next available ID
         private int id;
         private string flightNumber;
         private string origin;
@@ -16,9 +17,16 @@ namespace AeroSystem.models.Flight
         private List<Passenger.Passenger> passengers;
         private string gate;
 
-        public Flight(int id, string flightNumber, string origin, string destination, DateTime EstimatedDepartureTime, DateTime EstimtaedArrivalTime, List<Passenger.Passenger> passengers, string gate)
+        // ! Static Methods
+        static Flight()
         {
-            this.id = id;
+            nextId = 1;
+        }
+
+        // ! Constructor Methods
+        public Flight(string flightNumber, string origin, string destination, DateTime EstimatedDepartureTime, DateTime EstimtaedArrivalTime, List<Passenger.Passenger> passengers, string gate)
+        {
+            this.id = nextId++; // Assign the current value of nextId and increment it
             this.flightNumber = flightNumber;
             this.origin = origin;
             this.destination = destination;
@@ -90,5 +98,6 @@ namespace AeroSystem.models.Flight
                 Console.WriteLine(passenger.FirstName + " " + passenger.LastName + " is on this flight.");
             }
         }
+
     }
 }

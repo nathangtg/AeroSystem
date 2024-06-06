@@ -9,6 +9,7 @@ namespace AeroSystem.models.Baggage
 {
     public class Baggage
     {
+        private static int lastId = 0;
         private int id;
         private string baggageId;
         private int weight;
@@ -16,9 +17,12 @@ namespace AeroSystem.models.Baggage
         private Flight.Flight flight;
         private string screeningStatus;
 
-        public Baggage(int id, string baggageId, int weight, Passenger.Passenger owner, string screeningStatus, Flight.Flight flight)
+        // ! Static constructor
+
+        // ! Constructors
+        public Baggage(string baggageId, int weight, Passenger.Passenger owner, string screeningStatus, Flight.Flight flight)
         {
-            this.id = id;
+            id = ++lastId;
             this.baggageId = baggageId;
             this.weight = weight;
             this.owner = owner;
@@ -55,6 +59,12 @@ namespace AeroSystem.models.Baggage
         {
             get { return screeningStatus; }
             set { screeningStatus = value; }
+        }
+
+        public Flight.Flight Flight
+        {
+            get { return flight; }
+            set { flight = value; }
         }
 
         // ! Methods

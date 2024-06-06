@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AeroSystem.models.Flight;
 
 namespace AeroSystem.models.Passenger
 {
@@ -12,18 +13,18 @@ namespace AeroSystem.models.Passenger
     private string firstName;
     private string lastName;
     private string passportNumber;
-    private string flightDetails;
+    private Flight.Flight flight;
     private bool specialNeeds;
     private string specialNeedsDetails;
 
     // ! Constructors
-    public Passenger(string firstName, string lastName, string passportNumber, string flightDetails, bool specialNeeds, string specialNeedsDetails)
+    public Passenger(string firstName, string lastName, string passportNumber, Flight.Flight flight, bool specialNeeds, string specialNeedsDetails)
     {
         id = ++lastId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.passportNumber = passportNumber;
-        this.flightDetails = flightDetails;
+        this.flight = flight;
         this.specialNeeds = specialNeeds;
         this.specialNeedsDetails = specialNeedsDetails;
     }
@@ -54,10 +55,10 @@ namespace AeroSystem.models.Passenger
             set { passportNumber = value; }
         }
 
-        public string FlightDetails
+        public Flight.Flight Flight
         {
-            get { return flightDetails; }
-            set { flightDetails = value; }
+            get { return flight; }
+            set { flight = value; }
         }
 
         public bool SpecialNeeds

@@ -7,15 +7,16 @@ namespace AeroSystem.models.Staff
 {
     public class Staff
     {
+        private static int lastId = 0;
         private int id;
         private string staffId;
         private string firstName;
         private string lastName;
         private string position;
 
-        public Staff(int id, string staffId, string firstName, string lastName, string position)
+        public Staff(string staffId, string firstName, string lastName, string position)
         {
-            this.id = id;
+            id = ++lastId;
             this.staffId = staffId;
             this.firstName = firstName;
             this.lastName = lastName;

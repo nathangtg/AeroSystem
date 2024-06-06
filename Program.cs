@@ -143,6 +143,7 @@ public class Program
         {
             Console.WriteLine($"Baggage ID: {b.BaggageId}, Weight: {b.Weight}, Owner: {b.Owner.FullName}, Flight: {b.Flight.FlightNumber}, Screening Status: {b.ScreeningStatus}");
         }
+        Console.WriteLine("--------------");
     }
 
 

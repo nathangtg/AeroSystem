@@ -44,13 +44,16 @@ namespace AeroSystem.models.SelfServiceKiosk
             Console.WriteLine("Passenger " + passenger.Id + " has printed boarding pass " + boardingPass.BoardingPassId + " for flight " + flight.FlightNumber);
 
             // Show boarding pass
-            Console.WriteLine("Boarding Pass ID: " + boardingPass.BoardingPassId);
-            Console.WriteLine("Flight Number: " + flight.FlightNumber);
-            Console.WriteLine("Seat Number: " + boardingPass.SeatNumber);
-            Console.WriteLine("Gate: " + boardingPass.Gate);
-            Console.WriteLine("Boarding Time: " + boardingPass.BoardingTime);
-            Console.WriteLine("Departure Time: " + boardingPass.DepartureTime);
-
+            Console.WriteLine("Boarding Pass");
+            Console.WriteLine("--------------");
+            Console.WriteLine($"Flight: {boardingPass.Flight.FlightNumber}");
+            Console.WriteLine($"Origin: {boardingPass.Flight.Origin}");
+            Console.WriteLine($"Destination: {boardingPass.Flight.Destination}");
+            Console.WriteLine($"Gate: {boardingPass.Gate}");
+            Console.WriteLine($"Boarding Time: {boardingPass.BoardingTime}");
+            Console.WriteLine($"Departure Time: {boardingPass.DepartureTime}");
+            Console.WriteLine($"Passenger: {boardingPass.Passenger.FirstName} {boardingPass.Passenger.LastName}");
+            Console.WriteLine("--------------");
         }
 
     }

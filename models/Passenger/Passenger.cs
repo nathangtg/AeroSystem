@@ -7,24 +7,26 @@ namespace AeroSystem.models.Passenger
 {
     public class Passenger
     {
-        private int id;
-        private string firstName;
-        private string lastName;
-        private string passportNumber;
-        private string flightDetails;
-        private bool specialNeeds;
-        private string specialNeedsDetails;
+    private static int lastId = 0;
+    private int id;
+    private string firstName;
+    private string lastName;
+    private string passportNumber;
+    private string flightDetails;
+    private bool specialNeeds;
+    private string specialNeedsDetails;
 
-        public Passenger(int id, string firstName, string lastName, string passportNumber, string flightDetails, bool specialNeeds, string specialNeedsDetails)
-        {
-            this.id = id;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.passportNumber = passportNumber;
-            this.flightDetails = flightDetails;
-            this.specialNeeds = specialNeeds;
-            this.specialNeedsDetails = specialNeedsDetails;
-        }
+    // ! Constructors
+    public Passenger(string firstName, string lastName, string passportNumber, string flightDetails, bool specialNeeds, string specialNeedsDetails)
+    {
+        id = ++lastId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.passportNumber = passportNumber;
+        this.flightDetails = flightDetails;
+        this.specialNeeds = specialNeeds;
+        this.specialNeedsDetails = specialNeedsDetails;
+    }
 
 
         // ! Getters and Setters

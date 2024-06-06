@@ -4,6 +4,24 @@
 
 AeroCheck is a software system designed to revolutionize the airline industry by simplifying the check-in process and boarding pass issuance for passengers. Developed as part of the Object-Oriented Modelling subject (DIT2123) in the Diploma in Information Technology program at Sunway Diploma Studies, AeroCheck aims to enhance efficiency, improve passenger experience, and ensure seamless operations for airlines.
 
+## Justification for Using .NET with C#
+
+When selecting the technology stack for AeroCheck, careful consideration was given to various factors to ensure the project's success and efficiency. Here are the reasons why .NET with C# was chosen over Java with Maven:
+
+1. **Integrated Development Environment (IDE)**: Visual Studio offers a robust set of tools and features tailored for C# development, providing a seamless development experience with features like IntelliSense, debugging, and graphical interface design.
+
+2. **Language and Framework Consistency**: .NET provides a unified framework for building different types of applications, ensuring consistency in language and framework across various project components. This consistency simplifies development, maintenance, and deployment processes.
+
+3. **Performance**: .NET's Just-In-Time (JIT) compilation and optimized runtime environment offer competitive performance compared to Java applications. With advancements in .NET 8.0, developers can leverage performance enhancements to build fast and responsive applications like AeroCheck.
+
+4. **Dependency Management**: .NET's NuGet package manager simplifies dependency management, making it easier to integrate third-party libraries and components into the project.
+
+5. **Language Features**: C# offers modern language features such as async/await for asynchronous programming, LINQ for querying data, and powerful lambda expressions, enhancing developer productivity and code readability.
+
+6. **Community and Ecosystem**: .NET has a large and active developer community supported by Microsoft, providing a wide range of libraries, frameworks, and tools that streamline development tasks and solve common challenges.
+
+Considering these factors and the specific requirements outlined in the project description, .NET with C# emerges as the better framework for developing AeroCheck, ensuring efficient development, enhanced performance, and robust functionality.
+
 ## Author
 
 - Nathan G

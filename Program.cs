@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using AeroSystem.models.Baggage;
+﻿using AeroSystem.models.Baggage;
 using AeroSystem.models.BoardingPass;
 using AeroSystem.models.Flight;
 using AeroSystem.models.Group;
@@ -13,54 +11,142 @@ using System.Linq;
 
 public class Program
 {
-    // ! Random Number Generator
     private static Random random = new Random();
 
-    // ! Main Method
     public static void Main(string[] args)
     {
-        // ! Predefined Information
         SelfServiceKiosk kiosk = new SelfServiceKiosk(1, "K001");
 
-        // ! Generate flights and passengers
-        int passengerCount = 5;
-        List<Flight> flights = GenerateFlights(passengerCount);
-        List<Passenger> passengers = GeneratePassengers(passengerCount, flights);
-
-        // ! Generate baggage
-        List<Baggage> baggageList = GenerateBaggage(passengerCount, passengers);
-
-        // ! Generate staff
-        List<Staff> staffList = GenerateStaff(3);
-
-        // ! Check in passengers
-        foreach (Passenger p in passengers)
+        int passengerCount = 0;
+        while (true)
         {
-            kiosk.selfCheckIn(p, p.Flight);
+            Console.Write("Enter number of passengers to generate: ");
+            string? input = Console.ReadLine();
+            if (input != null && int.TryParse(input, out passengerCount) && passengerCount > 0)
+            {
+                break;
+            }
+            Console.WriteLine("Invalid input. Please enter a positive integer.");
         }
 
-        // ! Print boarding passes
-        foreach (Passenger p in passengers)
+        List<Flight> flights = GenerateFlights(5); // Generating 5 flights for selection
+        List<Passenger> passengers = GeneratePassengers(passengerCount, flights);
+
+        List<Baggage> baggageList = GenerateBaggage(passengerCount, passengers);
+        List<Staff> staffList = GenerateStaff(3);
+
+        // ! Interactive selection
+        Console.WriteLine("Select a flight to check-in passengers:");
+        PrintFlights(flights);
+
+        Flight? selectedFlight = null;
+
+        while (selectedFlight == null)
         {
+            selectedFlight = GetSelectedFlight(flights);
+            if (selectedFlight == null)
+            {
+                Console.WriteLine("Flight not found. Please enter a valid flight number.");
+            }
+
+            if (selectedFlight != null)
+            {
+                Console.WriteLine($"Selected Flight: {selectedFlight.FlightNumber} from {selectedFlight.Origin} to {selectedFlight.Destination}");
+
+                Console.WriteLine("Options:");
+                Console.WriteLine("1. Check-in Passengers");
+                Console.WriteLine("2. Print Boarding Passes");
+                Console.WriteLine("3. Print Baggage Information");
+                Console.Write("Enter option number: ");
+
+                int option;
+                while (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 3)
+                {
+                    Console.WriteLine("Invalid option. Please enter a number between 1 and 3.");
+                    Console.Write("Enter option number: ");
+                }
+                Console.WriteLine("--------------");
+
+                switch (option)
+                {
+                    case 1:
+                        CheckInPassengers(kiosk, passengers, selectedFlight);
+                        break;
+                    case 2:
+                        PrintBoardingPasses(kiosk, passengers, selectedFlight);
+                        break;
+                    case 3:
+                        PrintBaggageInformation(baggageList, selectedFlight);
+                        break;
+                }
+            }
+        }
+
+
+        Console.WriteLine($"Selected Flight: {selectedFlight?.FlightNumber} from {selectedFlight?.Origin} to {selectedFlight?.Destination}");
+
+        // ! Check in passengers for the selected flight
+        foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == selectedFlight?.FlightNumber))
+        {
+            kiosk.selfCheckIn(p, p.Flight);
             BoardingPass boardingPass = new BoardingPass(p.Flight, "B2", DateTime.Now, DateTime.Now.AddHours(3), p);
             kiosk.printBoardingPass(p, p.Flight, boardingPass);
         }
 
-        // ! Print Baggage Information
-        foreach (Baggage b in baggageList)
+        // ! Print out baggage information for the selected flight
+        foreach (Baggage b in baggageList.Where(b => b.Flight.FlightNumber == selectedFlight?.FlightNumber))
         {
             Console.WriteLine($"Baggage ID: {b.BaggageId}, Weight: {b.Weight}, Owner: {b.Owner.FullName}, Flight: {b.Flight.FlightNumber}, Screening Status: {b.ScreeningStatus}");
         }
+        Console.WriteLine("--------------");
 
-        // ! Print Staff Information
+
+        // ! Print staff information
         foreach (Staff s in staffList)
         {
             Console.WriteLine($"Staff ID: {s.StaffId}, Name: {s.FirstName} {s.LastName}, Position: {s.Position}");
         }
-
     }
 
-    // ! Information Generator Methods
+    // ! Interactive selection helper
+    private static Flight? GetSelectedFlight(List<Flight> flights)
+    {
+        Console.Write("Enter flight number: ");
+        string? flightNumber = Console.ReadLine();
+        if (flightNumber != null)
+        {
+            return flights.FirstOrDefault(f => f.FlightNumber == flightNumber);
+        }
+        return null;
+    }
+
+    private static void CheckInPassengers(SelfServiceKiosk kiosk, List<Passenger> passengers, Flight flight)
+    {
+        foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber))
+        {
+            kiosk.selfCheckIn(p, p.Flight);
+        }
+    }
+
+    private static void PrintBoardingPasses(SelfServiceKiosk kiosk, List<Passenger> passengers, Flight flight)
+    {
+        foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber))
+        {
+            BoardingPass boardingPass = new BoardingPass(flight, "B2", DateTime.Now, DateTime.Now.AddHours(3), p);
+            kiosk.printBoardingPass(p, flight, boardingPass);
+        }
+    }
+
+    private static void PrintBaggageInformation(List<Baggage> baggageList, Flight flight)
+    {
+        foreach (Baggage b in baggageList.Where(b => b.Flight.FlightNumber == flight.FlightNumber))
+        {
+            Console.WriteLine($"Baggage ID: {b.BaggageId}, Weight: {b.Weight}, Owner: {b.Owner.FullName}, Flight: {b.Flight.FlightNumber}, Screening Status: {b.ScreeningStatus}");
+        }
+    }
+
+
+    // ! Generator methods
     private static string GetRandomName()
     {
         string[] names = { "John", "Emily", "Michael", "Sophia", "William", "Emma", "David", "Olivia", "James", "Ava" };
@@ -89,7 +175,7 @@ public class Program
             string firstName = GetRandomName();
             string lastName = GetRandomName();
             string passportNumber = GeneratePassportNumber();
-            Flight flight = flights[i];
+            Flight flight = flights[random.Next(flights.Count)];
             bool specialNeeds = random.NextDouble() < 0.2; // 20% chance of having special needs
             string specialNeedsDetails = specialNeeds ? GetRandomSpecialNeedsDetails() : string.Empty;
 
@@ -107,7 +193,6 @@ public class Program
         string[] origins = { "SFO", "LAX", "JFK", "ORD", "DFW", "ATL", "DEN", "SEA", "LAS", "MCO" };
         string[] destinations = { "SIN", "KUL", "BKK", "CGK", "HAN", "SGN", "MNL", "PNH", "VTE", "RGN" };
 
-        // ! Generate random flights
         for (int i = 0; i < count; i++)
         {
             string origin = origins[random.Next(origins.Length)];
@@ -117,7 +202,6 @@ public class Program
             List<Passenger> flightPassengers = new List<Passenger>();
             string gate = $"G{random.Next(1, 100)}";
 
-            // ! Create a new Flight object
             Flight flight = new Flight($"FL{random.Next(100, 1000)}", origin, destination, departureTime, arrivalTime, flightPassengers, gate);
             flights.Add(flight);
         }
@@ -133,9 +217,11 @@ public class Program
         {
             int id = i + 1;
             string baggageId = $"B{id:D3}";
-            int weight = random.Next(5, 30); // Random weight between 5 and 30 kg
+            int weight = random.Next(5, 30); 
             Passenger owner = passengers[random.Next(passengers.Count)];
-            string screeningStatus = "Pending";
+
+            // ! Randomize the screening status
+            ScreeningStatus screeningStatus = (ScreeningStatus)random.Next(Enum.GetValues(typeof(ScreeningStatus)).Length);
 
             Baggage baggage = new Baggage(baggageId, weight, owner, screeningStatus, owner.Flight);
             baggageList.Add(baggage);
@@ -143,6 +229,7 @@ public class Program
 
         return baggageList;
     }
+
 
     public static List<Staff> GenerateStaff(int count)
     {
@@ -162,5 +249,13 @@ public class Program
         }
 
         return staffList;
+    }
+
+    private static void PrintFlights(List<Flight> flights)
+    {
+        foreach (Flight flight in flights)
+        {
+            Console.WriteLine($"Flight Number: {flight.FlightNumber}, Origin: {flight.Origin}, Destination: {flight.Destination}");
+        }
     }
 }

@@ -7,20 +7,28 @@ using AeroSystem.models.Passenger;
 
 namespace AeroSystem.models.Baggage
 {
+    public enum ScreeningStatus
+    {
+        Pending,
+        Cleared,
+        Suspicious
+    }
+
     public class Baggage
     {
+
         private static int lastId = 0;
         private int id;
         private string baggageId;
         private int weight;
         private Passenger.Passenger owner;
         private Flight.Flight flight;
-        private string screeningStatus;
+        private ScreeningStatus screeningStatus;
 
         // ! Static constructor
 
         // ! Constructors
-        public Baggage(string baggageId, int weight, Passenger.Passenger owner, string screeningStatus, Flight.Flight flight)
+        public Baggage(string baggageId, int weight, Passenger.Passenger owner, ScreeningStatus screeningStatus, Flight.Flight flight)
         {
             id = ++lastId;
             this.baggageId = baggageId;
@@ -55,7 +63,7 @@ namespace AeroSystem.models.Baggage
             set { owner = value; }
         }
 
-        public string ScreeningStatus
+        public ScreeningStatus ScreeningStatus
         {
             get { return screeningStatus; }
             set { screeningStatus = value; }
@@ -79,9 +87,9 @@ namespace AeroSystem.models.Baggage
             Console.WriteLine("The owner of this baggage is " + owner.FirstName + " " + owner.LastName);
         }
 
-        public void updateScreeningStatus(string status)
+        public void updateScreeningStatus(ScreeningStatus status)
         {
-            this.screeningStatus = status;
+            screeningStatus = status;
             Console.WriteLine("The screening status of baggage " + baggageId + " has been updated to " + status);
         }
     }

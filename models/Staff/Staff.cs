@@ -54,6 +54,11 @@ namespace AeroSystem.models.Staff
             set {position = value;}
         }
 
+        public string FullName
+        {
+            get {return firstName + " " + lastName;}
+        }
+
         // ! Methods
         public void assistPassenger()
         {

@@ -15,12 +15,11 @@ public class Program
 
     public static void Main(string[] args)
     {
-        SelfServiceKiosk kiosk = new SelfServiceKiosk(1, "K001");
-
         List<Flight> flights = new List<Flight>();
         List<Passenger> passengers = new List<Passenger>();
         List<Baggage> baggageList = new List<Baggage>();
         List<Staff> staffList = new List<Staff>();
+        List<SelfServiceKiosk> kiosks = GenerateKiosks(1);
 
         while (true)
         {
@@ -29,11 +28,13 @@ public class Program
             Console.WriteLine("2. Generate Passengers");
             Console.WriteLine("3. Generate Staff");
             Console.WriteLine("4. Select Flight and Perform Operations");
-            Console.WriteLine("5. Exit");
+            Console.WriteLine("5. Print Kiosks");
+            Console.WriteLine("6. Print Staff");
+            Console.WriteLine("7. Print Passengers");
+            Console.WriteLine("8. Exit");
             Console.Write("Enter your choice: ");
 
-            int choice;
-            if (int.TryParse(Console.ReadLine(), out choice))
+            if (int.TryParse(Console.ReadLine(), out int choice))
             {
                 switch (choice)
                 {
@@ -65,10 +66,19 @@ public class Program
                         }
                         else
                         {
-                            PerformFlightOperations(kiosk, flights, passengers, baggageList);
+                            PerformFlightOperations(kiosks[0], flights, passengers, baggageList);
                         }
                         break;
                     case 5:
+                        PrintKiosks(kiosks);
+                        break;
+                    case 6:
+                        PrintStaff(staffList);
+                        break;
+                    case 7:
+                        PrintPassengers(passengers);
+                        break;
+                    case 8:
                         return;
                     default:
                         Console.WriteLine("Invalid choice. Please select a valid option.");
@@ -125,8 +135,7 @@ public class Program
                     Console.WriteLine("4. Back to Main Menu");
                     Console.Write("Enter option number: ");
 
-                    int option;
-                    if (int.TryParse(Console.ReadLine(), out option))
+                    if (int.TryParse(Console.ReadLine(), out int option))
                     {
                         switch (option)
                         {
@@ -157,11 +166,6 @@ public class Program
         }
     }
 
-
-    // ! Interactive selection helper
-    // ! Interactive selection helper
-    // ! Interactive selection helper
-    // ! Interactive selection helper
     private static Flight? GetSelectedFlight(List<Flight> flights)
     {
         Console.Write("Enter flight number: ");
@@ -199,10 +203,30 @@ public class Program
         Console.WriteLine("--------------");
     }
 
-    // ! Generator methods
-    // ! Generator methods
-    // ! Generator methods
-    // ! Generator methods
+    private static void PrintKiosks(List<SelfServiceKiosk> kiosks)
+    {
+        foreach (var kiosk in kiosks)
+        {
+            Console.WriteLine($"Kiosk ID: {kiosk.KioskId}");
+        }
+    }
+
+    private static void PrintStaff(List<Staff> staffList)
+    {
+        foreach (var staff in staffList)
+        {
+            Console.WriteLine($"Staff ID: {staff.StaffId}, Name: {staff.FirstName} {staff.LastName}, Position: {staff.Position}");
+        }
+    }
+
+    private static void PrintPassengers(List<Passenger> passengers)
+    {
+        foreach (var passenger in passengers)
+        {
+            Console.WriteLine($"Passenger: {passenger.FullName}, Passport Number: {passenger.PassportNumber}, Flight: {passenger.Flight.FlightNumber}, Special Needs: {passenger.SpecialNeedsDetails}");
+        }
+    }
+
     private static string GetRandomName()
     {
         string[] names = { "John", "Emily", "Michael", "Sophia", "William", "Emma", "David", "Olivia", "James", "Ava" };
@@ -273,10 +297,9 @@ public class Program
         {
             int id = i + 1;
             string baggageId = $"B{id:D3}";
-            int weight = random.Next(5, 30); 
+            int weight = random.Next(5, 30);
             Passenger owner = passengers[random.Next(passengers.Count)];
 
-            // ! Randomize the screening status
             ScreeningStatus screeningStatus = (ScreeningStatus)random.Next(Enum.GetValues(typeof(ScreeningStatus)).Length);
 
             Baggage baggage = new Baggage(baggageId, weight, owner, screeningStatus, owner.Flight);
@@ -286,6 +309,21 @@ public class Program
         return baggageList;
     }
 
+    public static List<SelfServiceKiosk> GenerateKiosks(int count)
+    {
+        List<SelfServiceKiosk> kiosks = new List<SelfServiceKiosk>();
+
+        for (int i = 0; i < count; i++)
+        {
+            int id = i + 1;
+            string kioskId = $"K{id:D3}";
+
+            SelfServiceKiosk kiosk = new SelfServiceKiosk(id, kioskId);
+            kiosks.Add(kiosk);
+        }
+
+        return kiosks;
+    }
 
     public static List<Staff> GenerateStaff(int count)
     {

@@ -17,6 +17,7 @@ public class Program
     {
         SelfServiceKiosk kiosk = new SelfServiceKiosk(1, "K001");
 
+        // ! Get the number of passengers to generate
         int passengerCount = 0;
         while (true)
         {
@@ -29,11 +30,36 @@ public class Program
             Console.WriteLine("Invalid input. Please enter a positive integer.");
         }
 
-        List<Flight> flights = GenerateFlights(5); // Generating 5 flights for selection
-        List<Passenger> passengers = GeneratePassengers(passengerCount, flights);
+        // ! Get the number of flights to generate
+        int flightCount = 0;
+        while (true)
+        {
+            Console.Write("Enter number of flights to generate: ");
+            string? input = Console.ReadLine();
+            if (input != null && int.TryParse(input, out flightCount) && flightCount > 0)
+            {
+                break;
+            }
+            Console.WriteLine("Invalid input. Please enter a positive integer.");
+        }
 
+        // ! Get the number of staff to generate
+        int staffCount = 0;
+        while (true)
+        {
+            Console.Write("Enter number of staff to generate: ");
+            string? input = Console.ReadLine();
+            if (input != null && int.TryParse(input, out staffCount) && staffCount > 0)
+            {
+                break;
+            }
+            Console.WriteLine("Invalid input. Please enter a positive integer.");
+        }
+
+        List<Flight> flights = GenerateFlights(flightCount);
+        List<Passenger> passengers = GeneratePassengers(passengerCount, flights);
         List<Baggage> baggageList = GenerateBaggage(passengerCount, passengers);
-        List<Staff> staffList = GenerateStaff(3);
+        List<Staff> staffList = GenerateStaff(staffCount);
 
         // ! Interactive selection
         Console.WriteLine("Select a flight to check-in passengers:");

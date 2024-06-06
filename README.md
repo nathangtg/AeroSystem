@@ -18,9 +18,7 @@ When selecting the technology stack for AeroCheck, careful consideration was giv
 
 5. **Language Features**: C# offers modern language features such as async/await for asynchronous programming, LINQ for querying data, and powerful lambda expressions, enhancing developer productivity and code readability.
 
-6. **Community and Ecosystem**: .NET has a large and active developer community supported by Microsoft, providing a wide range of libraries, frameworks, and tools that streamline development tasks and solve common challenges.
-
-Considering these factors and the specific requirements outlined in the project description, .NET with C# emerges as the better framework for developing AeroCheck, ensuring efficient development, enhanced performance, and robust functionality.
+Considering these factors and the specific requirements outlined in the project description, .NET with C# emerges as the better framework for developing AeroCheck, ensuring efficient development, enhanced performance, and robust functionality even for a console application.
 
 ## Author
 

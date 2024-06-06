@@ -108,6 +108,11 @@ public class Program
         }
     }
 
+
+
+    // ! Interactive selection helper
+    // ! Interactive selection helper
+    // ! Interactive selection helper
     // ! Interactive selection helper
     private static Flight? GetSelectedFlight(List<Flight> flights)
     {
@@ -146,7 +151,9 @@ public class Program
         Console.WriteLine("--------------");
     }
 
-
+    // ! Generator methods
+    // ! Generator methods
+    // ! Generator methods
     // ! Generator methods
     private static string GetRandomName()
     {

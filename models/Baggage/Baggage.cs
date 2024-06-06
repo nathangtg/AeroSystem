@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AeroSystem.models.Flight;
 using AeroSystem.models.Passenger;
 
 namespace AeroSystem.models.Baggage
@@ -12,15 +13,17 @@ namespace AeroSystem.models.Baggage
         private string baggageId;
         private int weight;
         private Passenger.Passenger owner;
+        private Flight.Flight flight;
         private string screeningStatus;
 
-        public Baggage(int id, string baggageId, int weight, Passenger.Passenger owner, string screeningStatus)
+        public Baggage(int id, string baggageId, int weight, Passenger.Passenger owner, string screeningStatus, Flight.Flight flight)
         {
             this.id = id;
             this.baggageId = baggageId;
             this.weight = weight;
             this.owner = owner;
             this.screeningStatus = screeningStatus;
+            this.flight = flight;
         }
 
         // ! Getters and Setters

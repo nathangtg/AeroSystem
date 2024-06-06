@@ -13,6 +13,4 @@ Flight flight2 = new Flight("FL002", "SFO", "MIA", DateTime.Now, DateTime.Now.Ad
 kiosk.selfCheckIn(passenger, flight2);
 kiosk.printBoardingPass(passenger, flight2, new BoardingPass(flight2, "B2", DateTime.Now, DateTime.Now.AddHours(3), passenger));
 
-Console.WriteLine(passenger.FirstName);
-
 

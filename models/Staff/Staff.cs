@@ -64,9 +64,10 @@ namespace AeroSystem.models.Staff
             Console.WriteLine("Staff " + staffId + " is checking in a passenger.");
         }
 
-        public void screenBaggage()
+        public void manageCheckInCounter()
         {
-            Console.WriteLine("Staff " + staffId + " is screening a baggage.");
+            Console.WriteLine("Staff " + staffId + " is managing a check-in counter.");
         }
+
     }
 }

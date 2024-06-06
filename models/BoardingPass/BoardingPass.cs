@@ -26,8 +26,8 @@ namespace AeroSystem.models.BoardingPass
         private string GenerateSeatNumber()
         {
             // Assuming an Airbus A320 with a 3-3 seating configuration
-            int totalRows = 30; // Number of rows
-            int rowLength = 6; // Number of seats per row
+            int totalRows = 30; 
+            int rowLength = 6; 
 
             // Generate a random row number between 1 and totalRows
             int rowNumber = new Random().Next(1, totalRows + 1);
@@ -42,7 +42,7 @@ namespace AeroSystem.models.BoardingPass
 
         private string GetSeatLetter(int seatNumber)
         {
-            // Convert seat number to corresponding seat letter
+            // Convert seat number to seat letter
             switch (seatNumber)
             {
                 case 1:

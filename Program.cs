@@ -17,52 +17,89 @@ public class Program
     {
         SelfServiceKiosk kiosk = new SelfServiceKiosk(1, "K001");
 
-        // ! Get the number of passengers to generate
-        int passengerCount = 0;
+        List<Flight> flights = new List<Flight>();
+        List<Passenger> passengers = new List<Passenger>();
+        List<Baggage> baggageList = new List<Baggage>();
+        List<Staff> staffList = new List<Staff>();
+
         while (true)
         {
-            Console.Write("Enter number of passengers to generate: ");
-            string? input = Console.ReadLine();
-            if (input != null && int.TryParse(input, out passengerCount) && passengerCount > 0)
+            Console.WriteLine("Menu:");
+            Console.WriteLine("1. Generate Flights");
+            Console.WriteLine("2. Generate Passengers");
+            Console.WriteLine("3. Generate Staff");
+            Console.WriteLine("4. Select Flight and Perform Operations");
+            Console.WriteLine("5. Exit");
+            Console.Write("Enter your choice: ");
+
+            int choice;
+            if (int.TryParse(Console.ReadLine(), out choice))
             {
-                break;
+                switch (choice)
+                {
+                    case 1:
+                        flights = GenerateFlights(GetPositiveIntegerInput("Enter number of flights to generate: "));
+                        break;
+                    case 2:
+                        if (flights.Count == 0)
+                        {
+                            Console.WriteLine("No flights available. Please generate flights first.");
+                        }
+                        else
+                        {
+                            passengers = GeneratePassengers(GetPositiveIntegerInput("Enter number of passengers to generate: "), flights);
+                            baggageList = GenerateBaggage(passengers.Count, passengers);
+                        }
+                        break;
+                    case 3:
+                        staffList = GenerateStaff(GetPositiveIntegerInput("Enter number of staff to generate: "));
+                        break;
+                    case 4:
+                        if (flights.Count == 0)
+                        {
+                            Console.WriteLine("No flights available. Please generate flights first.");
+                        }
+                        else if (passengers.Count == 0)
+                        {
+                            Console.WriteLine("No passengers available. Please generate passengers first.");
+                        }
+                        else
+                        {
+                            PerformFlightOperations(kiosk, flights, passengers, baggageList);
+                        }
+                        break;
+                    case 5:
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please select a valid option.");
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+            }
+        }
+    }
+
+    private static int GetPositiveIntegerInput(string prompt)
+    {
+        int result;
+        while (true)
+        {
+            Console.Write(prompt);
+            string? input = Console.ReadLine();
+            if (input != null && int.TryParse(input, out result) && result > 0)
+            {
+                return result;
             }
             Console.WriteLine("Invalid input. Please enter a positive integer.");
         }
+    }
 
-        // ! Get the number of flights to generate
-        int flightCount = 0;
-        while (true)
-        {
-            Console.Write("Enter number of flights to generate: ");
-            string? input = Console.ReadLine();
-            if (input != null && int.TryParse(input, out flightCount) && flightCount > 0)
-            {
-                break;
-            }
-            Console.WriteLine("Invalid input. Please enter a positive integer.");
-        }
-
-        // ! Get the number of staff to generate
-        int staffCount = 0;
-        while (true)
-        {
-            Console.Write("Enter number of staff to generate: ");
-            string? input = Console.ReadLine();
-            if (input != null && int.TryParse(input, out staffCount) && staffCount > 0)
-            {
-                break;
-            }
-            Console.WriteLine("Invalid input. Please enter a positive integer.");
-        }
-
-        List<Flight> flights = GenerateFlights(flightCount);
-        List<Passenger> passengers = GeneratePassengers(passengerCount, flights);
-        List<Baggage> baggageList = GenerateBaggage(passengerCount, passengers);
-        List<Staff> staffList = GenerateStaff(staffCount);
-
-        // ! Interactive selection
-        Console.WriteLine("Select a flight to check-in passengers:");
+    private static void PerformFlightOperations(SelfServiceKiosk kiosk, List<Flight> flights, List<Passenger> passengers, List<Baggage> baggageList)
+    {
+        Console.WriteLine("Select a flight:");
         PrintFlights(flights);
 
         Flight? selectedFlight = null;
@@ -79,61 +116,46 @@ public class Program
             {
                 Console.WriteLine($"Selected Flight: {selectedFlight.FlightNumber} from {selectedFlight.Origin} to {selectedFlight.Destination}");
 
-                Console.WriteLine("Options:");
-                Console.WriteLine("1. Check-in Passengers");
-                Console.WriteLine("2. Print Boarding Passes");
-                Console.WriteLine("3. Print Baggage Information");
-                Console.Write("Enter option number: ");
-
-                int option;
-                while (!int.TryParse(Console.ReadLine(), out option) || option < 1 || option > 3)
+                while (true)
                 {
-                    Console.WriteLine("Invalid option. Please enter a number between 1 and 3.");
+                    Console.WriteLine("Options:");
+                    Console.WriteLine("1. Check-in Passengers");
+                    Console.WriteLine("2. Print Boarding Passes");
+                    Console.WriteLine("3. Print Baggage Information");
+                    Console.WriteLine("4. Back to Main Menu");
                     Console.Write("Enter option number: ");
-                }
-                Console.WriteLine("--------------");
 
-                switch (option)
-                {
-                    case 1:
-                        CheckInPassengers(kiosk, passengers, selectedFlight);
-                        break;
-                    case 2:
-                        PrintBoardingPasses(kiosk, passengers, selectedFlight);
-                        break;
-                    case 3:
-                        PrintBaggageInformation(baggageList, selectedFlight);
-                        break;
+                    int option;
+                    if (int.TryParse(Console.ReadLine(), out option))
+                    {
+                        switch (option)
+                        {
+                            case 1:
+                                CheckInPassengers(kiosk, passengers, selectedFlight);
+                                break;
+                            case 2:
+                                PrintBoardingPasses(kiosk, passengers, selectedFlight);
+                                break;
+                            case 3:
+                                PrintBaggageInformation(baggageList, selectedFlight);
+                                break;
+                            case 4:
+                                return;
+                            default:
+                                Console.WriteLine("Invalid option. Please enter a number between 1 and 4.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    }
+
+                    Console.WriteLine("--------------");
                 }
             }
         }
-
-
-        Console.WriteLine($"Selected Flight: {selectedFlight?.FlightNumber} from {selectedFlight?.Origin} to {selectedFlight?.Destination}");
-
-        // ! Check in passengers for the selected flight
-        foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == selectedFlight?.FlightNumber))
-        {
-            kiosk.selfCheckIn(p, p.Flight);
-            BoardingPass boardingPass = new BoardingPass(p.Flight, "B2", DateTime.Now, DateTime.Now.AddHours(3), p);
-            kiosk.printBoardingPass(p, p.Flight, boardingPass);
-        }
-
-        // ! Print out baggage information for the selected flight
-        foreach (Baggage b in baggageList.Where(b => b.Flight.FlightNumber == selectedFlight?.FlightNumber))
-        {
-            Console.WriteLine($"Baggage ID: {b.BaggageId}, Weight: {b.Weight}, Owner: {b.Owner.FullName}, Flight: {b.Flight.FlightNumber}, Screening Status: {b.ScreeningStatus}");
-        }
-        Console.WriteLine("--------------");
-
-
-        // ! Print staff information
-        foreach (Staff s in staffList)
-        {
-            Console.WriteLine($"Staff ID: {s.StaffId}, Name: {s.FirstName} {s.LastName}, Position: {s.Position}");
-        }
     }
-
 
 
     // ! Interactive selection helper

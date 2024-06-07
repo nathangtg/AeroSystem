@@ -8,13 +8,14 @@ namespace AeroSystem.models.Group
 {
     public class Group
     {
+        private int lastId = 0;
         private int id;
         private List<Passenger.Passenger> passengers;
         private Passenger.Passenger representative;
 
-        public Group(int id, List<Passenger.Passenger> passengers, Passenger.Passenger representative)
+        public Group(List<Passenger.Passenger> passengers, Passenger.Passenger representative)
         {
-            this.id = id;
+            id = ++lastId;
             this.passengers = passengers;
             this.representative = representative;
         }

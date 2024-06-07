@@ -1,5 +1,6 @@
 ﻿using AeroSystem.models.Baggage;
 using AeroSystem.models.BoardingPass;
+using AeroSystem.models.CheckInCounter;
 using AeroSystem.models.Flight;
 using AeroSystem.models.Group;
 using AeroSystem.models.Passenger;
@@ -32,6 +33,7 @@ public class Program
             Console.WriteLine("6. Print Staff");
             Console.WriteLine("7. Print Passengers");
             Console.WriteLine("8. Exit");
+            Console.WriteLine("9. Generate Kiosks"); 
             Console.Write("Enter your choice: ");
 
             if (int.TryParse(Console.ReadLine(), out int choice))
@@ -66,7 +68,7 @@ public class Program
                         }
                         else
                         {
-                            PerformFlightOperations(kiosks[0], flights, passengers, baggageList);
+                            PerformFlightOperations(kiosks[0], flights, passengers, baggageList, staffList);
                         }
                         break;
                     case 5:
@@ -80,6 +82,9 @@ public class Program
                         break;
                     case 8:
                         return;
+                    case 9:
+                        kiosks = GenerateKiosks(GetPositiveIntegerInput("Enter number of kiosks to generate: "));
+                        break;
                     default:
                         Console.WriteLine("Invalid choice. Please select a valid option.");
                         break;
@@ -107,8 +112,19 @@ public class Program
         }
     }
 
-    private static void PerformFlightOperations(SelfServiceKiosk kiosk, List<Flight> flights, List<Passenger> passengers, List<Baggage> baggageList)
+    private static void PerformFlightOperations(SelfServiceKiosk kiosk, List<Flight> flights, List<Passenger> passengers, List<Baggage> baggageList, List<Staff> staffList)
     {
+
+        if (staffList.Count == 0)
+        {
+            Console.WriteLine("No staff available. Please generate staff first.");
+            return;
+        }
+
+        Random random = new Random();
+        Staff staff = staffList[random.Next(staffList.Count)]; 
+        CheckInCounter checkInCounter = new CheckInCounter(staff);
+
         Console.WriteLine("Select a flight:");
         PrintFlights(flights);
 
@@ -132,7 +148,8 @@ public class Program
                     Console.WriteLine("1. Check-in Passengers");
                     Console.WriteLine("2. Print Boarding Passes");
                     Console.WriteLine("3. Print Baggage Information");
-                    Console.WriteLine("4. Back to Main Menu");
+                    Console.WriteLine("4. Check-in Group");
+                    Console.WriteLine("5. Back to Main Menu");
                     Console.Write("Enter option number: ");
 
                     if (int.TryParse(Console.ReadLine(), out int option))
@@ -149,6 +166,9 @@ public class Program
                                 PrintBaggageInformation(baggageList, selectedFlight);
                                 break;
                             case 4:
+                                CheckInGroup(checkInCounter, passengers, selectedFlight);
+                                break;
+                            case 5:
                                 return;
                             default:
                                 Console.WriteLine("Invalid option. Please enter a number between 1 and 4.");
@@ -183,6 +203,13 @@ public class Program
         {
             kiosk.selfCheckIn(p, p.Flight);
         }
+    }
+
+    private static void CheckInGroup(CheckInCounter checkInCounter, List<Passenger> passengers, Flight flight)
+    {
+        List<Passenger> groupPassengers = passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber).ToList();
+        Group group = new Group(groupPassengers, groupPassengers[0]);
+        checkInCounter.checkinGroup(group, flight);
     }
 
     private static void PrintBoardingPasses(SelfServiceKiosk kiosk, List<Passenger> passengers, Flight flight)

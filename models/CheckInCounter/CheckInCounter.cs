@@ -11,18 +11,19 @@ namespace AeroSystem.models.CheckInCounter
 {
     public class CheckInCounter
     {
+        private static int idCounter = 0;
         private int id;
         private string counterId;
         private Staff.Staff staff;
 
-        public CheckInCounter(int id, string counterId, Staff.Staff staff)
+        public CheckInCounter(Staff.Staff staff)
         {
-            this.id = id;
-            this.counterId = counterId;
+            id = ++idCounter;
+            this.counterId = "C" + id.ToString("D3");
             this.staff = staff;
         }
 
-        // ! Getters and Setters
+        // Getters and Setters
         public int Id
         {
             get { return id; }
@@ -41,7 +42,7 @@ namespace AeroSystem.models.CheckInCounter
             set { staff = value; }
         }
 
-        // ! Methods
+        // Methods
         public void checkInPassenger(Passenger.Passenger passenger, Flight.Flight flight)
         {
             Console.WriteLine("Passenger " + passenger.Id + " has checked in at counter " + counterId + " for flight " + flight.FlightNumber);

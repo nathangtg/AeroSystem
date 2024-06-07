@@ -342,8 +342,8 @@ public static void Main(string[] args)
     public static List<Flight> GenerateFlights(int count)
     {
         List<Flight> flights = new List<Flight>();
-        string[] origins = { "SFO", "LAX", "JFK", "ORD", "DFW", "ATL", "DEN", "SEA", "LAS", "MCO" };
-        string[] destinations = { "SIN", "KUL", "BKK", "CGK", "HAN", "SGN", "MNL", "PNH", "VTE", "RGN" };
+        string[] origins = { "SFO", "LAX", "JFK", "ORD", "DFW", "ATL", "DEN", "SEA", "LAS", "MCO", "YYZ", "YVR", "YYC", "YUL", "YEG", "YOW", "CDG", "LHR", "AMS", "FRA" };
+        string[] destinations = { "SIN", "KUL", "BKK", "CGK", "HAN", "SGN", "MNL", "PNH", "VTE", "RGN", "DXB", "DOH", "IST", "AUH", "HKG", "PEK", "NRT", "ICN", "SYD", "AKL" };
 
         for (int i = 0; i < count; i++)
         {
@@ -360,6 +360,7 @@ public static void Main(string[] args)
 
         return flights;
     }
+
 
     public static List<Baggage> GenerateBaggage(int count, List<Passenger> passengers)
     {

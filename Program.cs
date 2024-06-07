@@ -403,7 +403,8 @@ public static void Main(string[] args)
                 { "British Airways", Tuple.Create("BA", "United Kingdom", new DateTime(1974, 4, 1), "https://www.britishairways.com/") },
                 { "Air France", Tuple.Create("AF", "France", new DateTime(1933, 10, 7), "https://www.airfrance.com/") },
                 { "KLM", Tuple.Create("KL", "Netherlands", new DateTime(1919, 10, 7), "https://www.klm.com/") },
-                { "Qantas", Tuple.Create("QF", "Australia", new DateTime(1920, 11, 16), "https://www.qantas.com/") }
+                { "Qantas", Tuple.Create("QF", "Australia", new DateTime(1920, 11, 16), "https://www.qantas.com/") },
+                { "Myanmar International Airlines", Tuple.Create("8M", "Myanmar", new DateTime(1946, 9, 15), "https://www.maiair.com/") }
             };
 
         List<Airline> airlines = new List<Airline>();

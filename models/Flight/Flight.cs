@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace AeroSystem.models.Flight
 {
     public class Flight
@@ -12,10 +7,11 @@ namespace AeroSystem.models.Flight
         private string flightNumber;
         private string origin;
         private string destination;
-        private DateTime EstimatedDepartureTime;
-        private DateTime EstimtaedArrivalTime;
+        private DateTime estimatedDepartureTime;
+        private DateTime estimatedArrivalTime;
         private List<Passenger.Passenger> passengers;
         private string gate;
+        private Airline.Airline airline;
 
         // ! Static Methods
         static Flight()
@@ -24,16 +20,17 @@ namespace AeroSystem.models.Flight
         }
 
         // ! Constructor Methods
-        public Flight(string flightNumber, string origin, string destination, DateTime EstimatedDepartureTime, DateTime EstimtaedArrivalTime, List<Passenger.Passenger> passengers, string gate)
+        public Flight(string flightNumber, string origin, string destination, DateTime estimatedDepartureTime, DateTime estimatedArrivalTime, List<Passenger.Passenger> passengers, string gate, Airline.Airline airline)
         {
             this.id = nextId++; // Assign the current value of nextId and increment it
             this.flightNumber = flightNumber;
             this.origin = origin;
             this.destination = destination;
-            this.EstimatedDepartureTime = EstimatedDepartureTime;
-            this.EstimtaedArrivalTime = EstimtaedArrivalTime;
+            this.estimatedDepartureTime = estimatedDepartureTime;
+            this.estimatedArrivalTime = estimatedArrivalTime;
             this.passengers = passengers;
             this.gate = gate;
+            this.airline = airline;
         }
 
         // ! Getters and Setters
@@ -61,16 +58,16 @@ namespace AeroSystem.models.Flight
             set { destination = value; }
         }
 
-        public DateTime estimatedDepartureTime
+        public DateTime EstimatedDepartureTime
         {
-            get { return EstimatedDepartureTime; }
-            set { EstimatedDepartureTime = value; }
+            get { return estimatedDepartureTime; }
+            set { estimatedDepartureTime = value; }
         }
 
-        public DateTime estimatedArrivalTime
+        public DateTime EstimatedArrivalTime
         {
-            get { return EstimtaedArrivalTime; }
-            set { EstimtaedArrivalTime = value; }
+            get { return estimatedArrivalTime; }
+            set { estimatedArrivalTime = value; }
         }
 
         public List<Passenger.Passenger> Passengers
@@ -85,13 +82,19 @@ namespace AeroSystem.models.Flight
             set { gate = value; }
         }
 
+        public Airline.Airline Airline
+        {
+            get { return airline; }
+            set { airline = value; }
+        }
+
         // ! Methods
-        public void updateFlightStatus()
+        public void UpdateFlightStatus()
         {
             Console.WriteLine("Flight " + flightNumber + " has been updated.");
         }
 
-        public void displayPassengers()
+        public void DisplayPassengers()
         {
             foreach (Passenger.Passenger passenger in passengers)
             {

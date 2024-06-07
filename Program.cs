@@ -1,4 +1,5 @@
-﻿using AeroSystem.models.Baggage;
+﻿using AeroSystem.models.Airline;
+using AeroSystem.models.Baggage;
 using AeroSystem.models.BoardingPass;
 using AeroSystem.models.CheckInCounter;
 using AeroSystem.models.Flight;
@@ -21,6 +22,7 @@ public static void Main(string[] args)
     List<Baggage> baggageList = new List<Baggage>();
     List<Staff> staffList = new List<Staff>();
     List<Group> groupList = new List<Group>();
+    List<Airline> airlines = new List<Airline>();
     List<SelfServiceKiosk> kiosks = GenerateKiosks(1);
 
     while (true)
@@ -36,7 +38,10 @@ public static void Main(string[] args)
         Console.WriteLine("8. Print Staff");
         Console.WriteLine("9. Print Passengers");
         Console.WriteLine("10. Print Groups");
-        Console.WriteLine("11. Exit");
+
+        Console.WriteLine("11. Generate Airlines");
+        Console.WriteLine("12. Print Airlines");
+        Console.WriteLine("13. Exit");
         Console.Write("Enter your choice: ");
 
         if (int.TryParse(Console.ReadLine(), out int choice))
@@ -44,7 +49,7 @@ public static void Main(string[] args)
             switch (choice)
             {
                 case 1:
-                    flights = GenerateFlights(GetPositiveIntegerInput("Enter number of flights to generate: "));
+                    flights = GenerateFlights(GetPositiveIntegerInput("Enter number of flights to generate: "), airlines);
                     break;
                 case 2:
                     if (flights.Count == 0)
@@ -100,6 +105,12 @@ public static void Main(string[] args)
                     PrintGroups(groupList);
                     break;
                 case 11:
+                    airlines = GenerateAirlines(GetPositiveIntegerInput("Enter number of airlines to generate: "));
+                    break;
+                case 12:
+                    PrintAirlines(airlines);
+                    break;
+                case 13:
                     return;
                 default:
                     Console.WriteLine("Invalid choice. Please select a valid option.");
@@ -156,7 +167,14 @@ public static void Main(string[] args)
 
             if (selectedFlight != null)
             {
+                Console.WriteLine("--------------");
                 Console.WriteLine($"Selected Flight: {selectedFlight.FlightNumber} from {selectedFlight.Origin} to {selectedFlight.Destination}");
+                Console.WriteLine($"Airline: {selectedFlight.Airline.Name}");
+                Console.WriteLine("Gate: " + selectedFlight.Gate);
+                Console.WriteLine("Airline Code: " + selectedFlight.Airline.Code);
+                Console.WriteLine("Estimated Departure Time: " + selectedFlight.EstimatedDepartureTime);
+                Console.WriteLine("Estimated Arrival Time: " + selectedFlight.EstimatedArrivalTime);
+                Console.WriteLine("--------------");
 
                 while (true)
                 {
@@ -339,11 +357,18 @@ public static void Main(string[] args)
     }
 
 
-    public static List<Flight> GenerateFlights(int count)
+    public static List<Flight> GenerateFlights(int count, List<Airline> airlines)
     {
         List<Flight> flights = new List<Flight>();
         string[] origins = { "SFO", "LAX", "JFK", "ORD", "DFW", "ATL", "DEN", "SEA", "LAS", "MCO", "YYZ", "YVR", "YYC", "YUL", "YEG", "YOW", "CDG", "LHR", "AMS", "FRA" };
         string[] destinations = { "SIN", "KUL", "BKK", "CGK", "HAN", "SGN", "MNL", "PNH", "VTE", "RGN", "DXB", "DOH", "IST", "AUH", "HKG", "PEK", "NRT", "ICN", "SYD", "AKL" };
+
+        // Check if there are airlines available
+        if (airlines.Count == 0)
+        {
+            Console.WriteLine("No airlines available. Please generate airlines first.");
+            return flights;
+        }
 
         for (int i = 0; i < count; i++)
         {
@@ -354,11 +379,45 @@ public static void Main(string[] args)
             List<Passenger> flightPassengers = new List<Passenger>();
             string gate = $"G{random.Next(1, 100)}";
 
-            Flight flight = new Flight($"FL{random.Next(100, 1000)}", origin, destination, departureTime, arrivalTime, flightPassengers, gate);
+            // Select a random airline
+            Airline randomAirline = airlines[random.Next(airlines.Count)];
+
+            Flight flight = new Flight($"{randomAirline.Code}-{random.Next(100, 1000)}", origin, destination, departureTime, arrivalTime, flightPassengers, gate, randomAirline);
             flights.Add(flight);
         }
 
         return flights;
+    }
+
+
+    public static List<Airline> GenerateAirlines(int count) 
+    {
+        Dictionary<string, Tuple<string, string, DateTime, string>> airlineAssociations = new Dictionary<string, Tuple<string, string, DateTime, string>>()
+            {
+                { "Singapore Airlines", Tuple.Create("SQ", "Singapore", new DateTime(1972, 10, 1), "https://www.singaporeair.com/") },
+                { "Qatar Airways", Tuple.Create("QR", "Qatar", new DateTime(1993, 11, 22), "https://www.qatarairways.com/") },
+                { "Emirates", Tuple.Create("EK", "United Arab Emirates", new DateTime(1985, 3, 25), "https://www.emirates.com/") },
+                { "Cathay Pacific", Tuple.Create("CX", "Hong Kong", new DateTime(1946, 9, 24), "https://www.cathaypacific.com/") },
+                { "ANA", Tuple.Create("NH", "Japan", new DateTime(1952, 12, 27), "https://www.ana.co.jp/") },
+                { "Lufthansa", Tuple.Create("LH", "Germany", new DateTime(1953, 1, 6), "https://www.lufthansa.com/") },
+                { "British Airways", Tuple.Create("BA", "United Kingdom", new DateTime(1974, 4, 1), "https://www.britishairways.com/") },
+                { "Air France", Tuple.Create("AF", "France", new DateTime(1933, 10, 7), "https://www.airfrance.com/") },
+                { "KLM", Tuple.Create("KL", "Netherlands", new DateTime(1919, 10, 7), "https://www.klm.com/") },
+                { "Qantas", Tuple.Create("QF", "Australia", new DateTime(1920, 11, 16), "https://www.qantas.com/") }
+            };
+
+        List<Airline> airlines = new List<Airline>();
+
+        for (int i = 0; i < count; i++)
+        {
+            string airlineName = airlineAssociations.ElementAt(i).Key;
+            Tuple<string, string, DateTime, string> airlineDetails = airlineAssociations.ElementAt(i).Value;
+
+            Airline airline = new Airline(airlineName, airlineDetails.Item1, airlineDetails.Item2, airlineDetails.Item2, airlineDetails.Item3, airlineDetails.Item4);
+            airlines.Add(airline);
+        }
+
+        return airlines;
     }
 
 
@@ -437,6 +496,14 @@ public static void Main(string[] args)
                 Console.WriteLine(passenger.FullName);
             }
             Console.WriteLine("--------------");
+        }
+    }
+
+    private static void PrintAirlines(List<Airline> airlines)
+    {
+        foreach (Airline airline in airlines)
+        {
+            Console.WriteLine($"Airline: {airline.Name}, Code: {airline.Code}, Headquarters: {airline.Headquarters}, Country: {airline.Country}, Founding Date: {airline.FoundingDate}, Website: {airline.Website}");
         }
     }
 }

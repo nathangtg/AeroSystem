@@ -40,15 +40,27 @@ Submission Deadline: June 21, 2024
 3. Build the solution to ensure all dependencies are resolved.
 4. Run the `Program.cs` file to execute the AeroCheck application.
 
+## Features
+
+- **Flight Generation**: Generate flights with random origin, destination, departure, and arrival times.
+- **Passenger Generation**: Generate passengers with random names, passport numbers, and special needs details.
+- **Group Generation**: Generate groups of passengers with varying sizes and representative selection.
+- **Staff Generation**: Generate staff members with random names and positions.
+- **Airlines Generation**: Generate airlines with associated codes, headquarters, founding dates, and websites.
+- **Kiosk Generation**: Generate self-service kiosks for passenger check-in.
+- **Interactive Menu**: Interactive menu system for user interaction and navigation.
+- **Flight Operations**: Perform operations such as passenger check-in, printing boarding passes, and handling baggage.
+- **Data Display**: Print information about kiosks, staff, passengers, groups, airlines, and flights.
+
 ## Additional Features
 
-- **Interactive User Interface**: Implemented interactive features to allow users to select flights, check-in passengers, and print boarding passes.
-- **Best Practices**: Utilized DateTime format to manage flight schedules and boarding times effectively.
+- **Error Handling**: Implemented error handling mechanisms to handle invalid inputs and prevent runtime crashes.
+- **DateTime Management**: Utilized DateTime format to manage flight schedules and boarding times effectively.
 - **Data Structures and Algorithms**: Employed data structures and algorithms to efficiently manage passenger information, baggage, and staff assignments.
-- **Error Handling**: Implemented error handling mechanisms to ensure robustness and reliability of the application.
 - **Documentation**: Comprehensive documentation provided to enhance understanding and facilitate future maintenance.
 
-## Additional Notes
+## Additional Information
 
 - Ensure that the .NET Core SDK is installed on your machine before running the project.
-- If you encounter any issues or have questions about the project, feel free to contact the author.
+- The project leverages object-oriented principles to ensure modularity, extensibility, and maintainability.
+- For any inquiries or assistance regarding the project, please contact the author, Nathan G.

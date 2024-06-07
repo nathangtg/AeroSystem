@@ -14,88 +14,104 @@ public class Program
 {
     private static Random random = new Random();
 
-    public static void Main(string[] args)
+public static void Main(string[] args)
+{
+    List<Flight> flights = new List<Flight>();
+    List<Passenger> passengers = new List<Passenger>();
+    List<Baggage> baggageList = new List<Baggage>();
+    List<Staff> staffList = new List<Staff>();
+    List<Group> groupList = new List<Group>();
+    List<SelfServiceKiosk> kiosks = GenerateKiosks(1);
+
+    while (true)
     {
-        List<Flight> flights = new List<Flight>();
-        List<Passenger> passengers = new List<Passenger>();
-        List<Baggage> baggageList = new List<Baggage>();
-        List<Staff> staffList = new List<Staff>();
-        List<SelfServiceKiosk> kiosks = GenerateKiosks(1);
+        Console.WriteLine("Menu:");
+        Console.WriteLine("1. Generate Flights");
+        Console.WriteLine("2. Generate Passengers");
+        Console.WriteLine("3. Generate Kiosks");
+        Console.WriteLine("4. Generate Groups");
+        Console.WriteLine("5. Generate Staff");
+        Console.WriteLine("6. Select Flight and Perform Operations");
+        Console.WriteLine("7. Print Kiosks");
+        Console.WriteLine("8. Print Staff");
+        Console.WriteLine("9. Print Passengers");
+        Console.WriteLine("10. Print Groups");
+        Console.WriteLine("11. Exit");
+        Console.Write("Enter your choice: ");
 
-        while (true)
+        if (int.TryParse(Console.ReadLine(), out int choice))
         {
-            Console.WriteLine("Menu:");
-            Console.WriteLine("1. Generate Flights");
-            Console.WriteLine("2. Generate Passengers");
-            Console.WriteLine("3. Generate Staff");
-            Console.WriteLine("4. Select Flight and Perform Operations");
-            Console.WriteLine("5. Print Kiosks");
-            Console.WriteLine("6. Print Staff");
-            Console.WriteLine("7. Print Passengers");
-            Console.WriteLine("8. Exit");
-            Console.WriteLine("9. Generate Kiosks"); 
-            Console.Write("Enter your choice: ");
-
-            if (int.TryParse(Console.ReadLine(), out int choice))
+            switch (choice)
             {
-                switch (choice)
-                {
-                    case 1:
-                        flights = GenerateFlights(GetPositiveIntegerInput("Enter number of flights to generate: "));
-                        break;
-                    case 2:
-                        if (flights.Count == 0)
-                        {
-                            Console.WriteLine("No flights available. Please generate flights first.");
-                        }
-                        else
-                        {
-                            passengers = GeneratePassengers(GetPositiveIntegerInput("Enter number of passengers to generate: "), flights);
-                            baggageList = GenerateBaggage(passengers.Count, passengers);
-                        }
-                        break;
-                    case 3:
-                        staffList = GenerateStaff(GetPositiveIntegerInput("Enter number of staff to generate: "));
-                        break;
-                    case 4:
-                        if (flights.Count == 0)
-                        {
-                            Console.WriteLine("No flights available. Please generate flights first.");
-                        }
-                        else if (passengers.Count == 0)
-                        {
-                            Console.WriteLine("No passengers available. Please generate passengers first.");
-                        }
-                        else
-                        {
-                            PerformFlightOperations(kiosks[0], flights, passengers, baggageList, staffList);
-                        }
-                        break;
-                    case 5:
-                        PrintKiosks(kiosks);
-                        break;
-                    case 6:
-                        PrintStaff(staffList);
-                        break;
-                    case 7:
-                        PrintPassengers(passengers);
-                        break;
-                    case 8:
-                        return;
-                    case 9:
-                        kiosks = GenerateKiosks(GetPositiveIntegerInput("Enter number of kiosks to generate: "));
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice. Please select a valid option.");
-                        break;
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid input. Please enter a number.");
+                case 1:
+                    flights = GenerateFlights(GetPositiveIntegerInput("Enter number of flights to generate: "));
+                    break;
+                case 2:
+                    if (flights.Count == 0)
+                    {
+                        Console.WriteLine("No flights available. Please generate flights first.");
+                    }
+                    else
+                    {
+                        passengers = GeneratePassengers(GetPositiveIntegerInput("Enter number of passengers to generate: "), flights);
+                        baggageList = GenerateBaggage(passengers.Count, passengers);
+                    }
+                    break;
+                case 3:
+                    kiosks = GenerateKiosks(GetPositiveIntegerInput("Enter number of kiosks to generate: "));
+                    break;
+                case 4:
+                    if (flights.Count == 0)
+                    {
+                        Console.WriteLine("No flights available. Please generate flights first.");
+                    }
+                    else
+                    {
+                        groupList = GenerateGroups(GetPositiveIntegerInput("Enter number of groups to generate: "), passengers);
+                    }
+                    break;
+                case 5:
+                    staffList = GenerateStaff(GetPositiveIntegerInput("Enter number of staff to generate: "));
+                    break;
+                case 6:
+                    if (flights.Count == 0)
+                    {
+                        Console.WriteLine("No flights available. Please generate flights first.");
+                    }
+                    else if (passengers.Count == 0)
+                    {
+                        Console.WriteLine("No passengers available. Please generate passengers first.");
+                    }
+                    else
+                    {
+                        PerformFlightOperations(kiosks[0], flights, passengers, baggageList, staffList, groupList);
+                    }
+                    break;
+                case 7:
+                    PrintKiosks(kiosks);
+                    break;
+                case 8:
+                    PrintStaff(staffList);
+                    break;
+                case 9:
+                    PrintPassengers(passengers);
+                    break;
+                case 10:
+                    PrintGroups(groupList);
+                    break;
+                case 11:
+                    return;
+                default:
+                    Console.WriteLine("Invalid choice. Please select a valid option.");
+                    break;
             }
         }
+        else
+        {
+            Console.WriteLine("Invalid input. Please enter a number.");
+        }
     }
+}
 
     private static int GetPositiveIntegerInput(string prompt)
     {
@@ -112,7 +128,7 @@ public class Program
         }
     }
 
-    private static void PerformFlightOperations(SelfServiceKiosk kiosk, List<Flight> flights, List<Passenger> passengers, List<Baggage> baggageList, List<Staff> staffList)
+    private static void PerformFlightOperations(SelfServiceKiosk kiosk, List<Flight> flights, List<Passenger> passengers, List<Baggage> baggageList, List<Staff> staffList, List<Group> GroupList)
     {
 
         if (staffList.Count == 0)
@@ -166,7 +182,7 @@ public class Program
                                 PrintBaggageInformation(baggageList, selectedFlight);
                                 break;
                             case 4:
-                                CheckInGroup(checkInCounter, passengers, selectedFlight);
+                                CheckInGroup(checkInCounter, GroupList, selectedFlight);
                                 break;
                             case 5:
                                 return;
@@ -205,21 +221,22 @@ public class Program
         }
     }
 
-    private static void CheckInGroup(CheckInCounter checkInCounter, List<Passenger> passengers, Flight flight)
+    private static void CheckInGroup(CheckInCounter checkInCounter, List<Group> groups, Flight flight)
     {
-        List<Passenger> groupPassengers = passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber).ToList();
-        Group group = new Group(groupPassengers, groupPassengers[0]);
-        checkInCounter.checkinGroup(group, flight);
+        foreach (Group group in groups.Where(g => g.Representative.Flight.FlightNumber == flight.FlightNumber))
+        {
+            checkInCounter.checkinGroup(group, flight);
+        }
     }
 
     private static void PrintBoardingPasses(SelfServiceKiosk kiosk, List<Passenger> passengers, Flight flight)
+{
+    foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber))
     {
-        foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber))
-        {
-            BoardingPass boardingPass = new BoardingPass(flight, "B2", DateTime.Now, DateTime.Now.AddHours(3), p);
-            kiosk.printBoardingPass(p, flight, boardingPass);
-        }
+        BoardingPass boardingPass = new BoardingPass(flight, "B2", DateTime.Now, DateTime.Now.AddHours(3), p);
+        kiosk.printBoardingPass(p, flight, boardingPass);
     }
+}
 
     private static void PrintBaggageInformation(List<Baggage> baggageList, Flight flight)
     {
@@ -283,16 +300,44 @@ public class Program
             string lastName = GetRandomName();
             string passportNumber = GeneratePassportNumber();
             Flight flight = flights[random.Next(flights.Count)];
-            bool specialNeeds = random.NextDouble() < 0.2; // 20% chance of having special needs
+            bool specialNeeds = random.NextDouble() < 0.2; 
             string specialNeedsDetails = specialNeeds ? GetRandomSpecialNeedsDetails() : string.Empty;
 
             Passenger passenger = new Passenger(firstName, lastName, passportNumber, flight, specialNeeds, specialNeedsDetails);
             passengers.Add(passenger);
-            flight.Passengers.Add(passenger); // Add the passenger to the flight's passenger list
+            flight.Passengers.Add(passenger); 
         }
 
         return passengers;
     }
+
+    public static List<Group> GenerateGroups(int count, List<Passenger> passengers)
+    {
+        List<Group> groups = new List<Group>();
+
+        for (int i = 0; i < count; i++)
+        {
+            int groupSize = random.Next(2, 6); 
+            List<Passenger> groupPassengers = new List<Passenger>();
+
+            List<Passenger> availablePassengers = new List<Passenger>(passengers);
+
+            for (int j = 0; j < groupSize && availablePassengers.Count > 0; j++)
+            {
+                int index = random.Next(availablePassengers.Count);
+                Passenger passenger = availablePassengers[index];
+                groupPassengers.Add(passenger);
+                availablePassengers.RemoveAt(index);
+            }
+
+            Passenger representative = groupPassengers[random.Next(groupPassengers.Count)];
+            Group group = new Group(groupPassengers, representative);
+            groups.Add(group);
+        }
+
+        return groups;
+    }
+
 
     public static List<Flight> GenerateFlights(int count)
     {
@@ -377,6 +422,20 @@ public class Program
         foreach (Flight flight in flights)
         {
             Console.WriteLine($"Flight Number: {flight.FlightNumber}, Origin: {flight.Origin}, Destination: {flight.Destination}");
+        }
+    }
+
+    private static void PrintGroups(List<Group> groups)
+    {
+        foreach (Group group in groups)
+        {
+            Console.WriteLine($"Group Representative: {group.Representative.FullName}");
+            Console.WriteLine("Group Members:");
+            foreach (Passenger passenger in group.Passengers)
+            {
+                Console.WriteLine(passenger.FullName);
+            }
+            Console.WriteLine("--------------");
         }
     }
 }

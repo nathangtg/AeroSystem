@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AeroSystem")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+234c923b473e96fa084efa8e9b1637199f726c4b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64baac3a12d3d0713a114518e6b067a7b290c24b")]
 [assembly: System.Reflection.AssemblyProductAttribute("AeroSystem")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AeroSystem")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

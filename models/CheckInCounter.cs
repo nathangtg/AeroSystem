@@ -24,6 +24,7 @@ namespace AeroSystem.models.CheckInCounter
         }
 
         // Getters and Setters
+        [System.ComponentModel.DataAnnotations.Key]
         public int Id
         {
             get { return id; }

@@ -220,7 +220,7 @@ public static void Main(string[] args)
         }
     }
 
-    private static Flight? GetSelectedFlight(List<Flight> flights)
+    public static Flight? GetSelectedFlight(List<Flight> flights)
     {
         Console.Write("Enter flight number: ");
         string? flightNumber = Console.ReadLine();
@@ -231,7 +231,7 @@ public static void Main(string[] args)
         return null;
     }
 
-    private static void CheckInPassengers(SelfServiceKiosk kiosk, List<Passenger> passengers, Flight flight)
+    public static void CheckInPassengers(SelfServiceKiosk kiosk, List<Passenger> passengers, Flight flight)
     {
         foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber))
         {
@@ -247,16 +247,16 @@ public static void Main(string[] args)
         }
     }
 
-    private static void PrintBoardingPasses(SelfServiceKiosk kiosk, List<Passenger> passengers, Flight flight)
-{
-    foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber))
+    public static void PrintBoardingPasses(SelfServiceKiosk kiosk, List<Passenger> passengers, Flight flight)
     {
-        BoardingPass boardingPass = new BoardingPass(flight, "B2", DateTime.Now, DateTime.Now.AddHours(3), p);
-        kiosk.printBoardingPass(p, flight, boardingPass);
+        foreach (Passenger p in passengers.Where(p => p.Flight.FlightNumber == flight.FlightNumber))
+        {
+            BoardingPass boardingPass = new BoardingPass(flight, "B2", DateTime.Now, DateTime.Now.AddHours(3), p);
+            kiosk.printBoardingPass(p, flight, boardingPass);
+        }
     }
-}
 
-    private static void PrintBaggageInformation(List<Baggage> baggageList, Flight flight)
+    public static void PrintBaggageInformation(List<Baggage> baggageList, Flight flight)
     {
         foreach (Baggage b in baggageList.Where(b => b.Flight.FlightNumber == flight.FlightNumber))
         {
@@ -500,7 +500,7 @@ public static void Main(string[] args)
         }
     }
 
-    private static void PrintAirlines(List<Airline> airlines)
+    public static void PrintAirlines(List<Airline> airlines)
     {
         foreach (Airline airline in airlines)
         {
